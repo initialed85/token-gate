@@ -52,7 +52,8 @@ Compare is constant-time over **every** entry. Revoking a consumer is deleting o
 `home-ops/clusters/dev/applications/auth/` (namespace `auth` on home-dev, Argo app `auth-dev`):
 
 - `token-gate.yaml` — Deployment (2 replicas, `enableServiceLinks: false`) + Service `token-gate`
-  on `:8080`, image `initialed85/token-gate:latest` with `imagePullPolicy: Always`.
+  on `:8080`, image `initialed85/token-gate:latest` (Docker Hub — the ghcr repos are private and
+  the dev nodes have no ghcr pull secret) with `imagePullPolicy: Always`.
 - `middleware-api-tokens.yaml` — `Middleware api-tokens` in namespace `auth`. Reference it from
   any namespace as `auth-api-tokens@kubernetescrd` (Traefik v3 splits the reference on the **first**
   hyphen; the oauth2 middleware in the same namespace proves the rule).
