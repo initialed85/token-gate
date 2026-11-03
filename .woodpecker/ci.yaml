@@ -1,0 +1,19 @@
+# The bearer-token gate that fronts the agent APIs on home-dev (chromium, ocr, rooter, ...). It is a
+# small pure-Go proxy, so the gate is the whole test suite: fmt, vet, and the unit tests, which need no
+# infrastructure.
+#
+# The image is built by build.yaml, not here, so a pull request still gets the checks without a publish.
+steps:
+  - name: test
+    image: docker.io/library/golang:1.26
+    commands:
+      - go version
+      - gofmt -l .
+      - test -z "$(gofmt -l .)"
+      - go vet ./...
+      - go test -count=1 ./...
+
+when:
+  - event: push
+    branch: master
+  - event: pull_request
